@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Secret{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <h1>{{user.username}}</h1>
+
+    <p>{{user.email}}</p>
+    <p>{{user.first_name}}</p>
+    <p>{{user.last_name}}</p>
+
+    <a class="btn btn-info text-center" href="/logout">logout</a>
+</div>
+
+{% endblock %}
