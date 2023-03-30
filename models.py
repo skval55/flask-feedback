@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
+from flask import session, flash, redirect
 
 bcrypt= Bcrypt()
 
@@ -49,6 +50,16 @@ class User(db.Model):
             return user
         else:
             return False
+
+    @classmethod
+    def authenticate(cls, username) :
+        if "username" not in session:
+            flash("You must be logged in to view!")
+            return True
+        elif username != session['username']:
+            flash("not your account!")
+            return True
+        return False
 
 class Feedback(db.Model):
 

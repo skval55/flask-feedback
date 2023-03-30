@@ -1,17 +1,44 @@
 {% extends 'base.html' %}
 
-{% block title %}Secret{% endblock %}
+{% block title %}{{user.username}}{% endblock %}
 
 {% block content %}
 <div class="container">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1 class="d-inline mb-0">{{user.username}}</h1>
+            <div class="d-inline text-secondary">{{user.first_name}} {{user.last_name}}</div>
+        </div>
+        <form class="d-inline" action="/users/{{user.username}}/delete" method="POST">
+            <button type="submit" class="btn btn-sm btn-danger text-center">delete</button>
+        </form>
+    </div>
+    <p class="py-0">{{user.email}}</p>
 
-    <h1>{{user.username}}</h1>
 
-    <p>{{user.email}}</p>
-    <p>{{user.first_name}}</p>
-    <p>{{user.last_name}}</p>
+    <div class="text-center m-3">
+        <a class="btn btn-lg btn-success  m-auto" href="/users/{{user.username}}/feedback/add">Add
+            Feedback</a>
+    </div>
+    {% for feedback in user.feedback %}
+    <div class="card p-3 m-2">
+        <div class="text-secondary">
+            <div class="card-title display-6 d-inline text-black">{{feedback.title}}</div>
+            @{{user.username}}
+        </div>
+        <div class="card-text py-3">{{feedback.content}}</div>
+        <div class="d-inline ">
+            <a class="btn btn-sm btn-success" href="/feedback/{{feedback.id}}/update">edit</a>
 
-    <a class="btn btn-info text-center" href="/logout">logout</a>
+            <form class="d-inline" action="/feedback/{{feedback.id}}/delete" method="post">
+                <button class="btn btn-sm btn-danger " type="submit">delete</button>
+            </form>
+        </div>
+    </div>
+
+    {% endfor %}
+
+
 </div>
 
 {% endblock %}
