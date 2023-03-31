@@ -1,12 +1,17 @@
 from flask import Flask, render_template, redirect, request, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, User, Feedback
+import os
+
+# use secret key in production or default to our dev one
+
 
 from forms import AddUser
 from forms import LoginUser, AddFeedback
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "oh-so-secret"
+# app.config["SECRET_KEY"] = "oh-so-secret"
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'shh')
 app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///flask_feedback"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
